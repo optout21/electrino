@@ -119,7 +119,7 @@ async fn main() {
                             if filter.contains_any(scripts.iter()) {
                                 let hash = filter.block_hash();
                                 for script in &scripts {
-                                    if filter.contains_any(vec![script.clone()].iter()) {
+                                    if filter.contains_any([script.clone()].iter()) {
                                         tracing::info!("FOUND script in block {}, {} !", filter.height(), script_addr_info(script));
                                     }
                                 }

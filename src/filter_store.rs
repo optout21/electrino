@@ -92,6 +92,7 @@ impl FilterStoreTrait for FilterStore {
             .read(true)
             .write(true)
             .create(true)
+            .truncate(false)
             .open(path)?;
         let mut store = FilterStore {
             file: Some(file),
@@ -146,11 +147,11 @@ impl FilterStoreTrait for FilterStore {
         if hash.len() != 32 {
             return Err(io::Error::new(
                 io::ErrorKind::InvalidInput,
-                format!("Invalid hash length"),
+                "Invalid hash length".to_string(),
             ));
         }
         let length = filter.len() as u32;
-        file.write_all(&hash)?;
+        file.write_all(hash)?;
         file.write_all(&height.to_le_bytes())?;
         file.write_all(&length.to_le_bytes())?;
         file.write_all(filter)?;
@@ -190,7 +191,7 @@ impl FilterStoreTrait for FilterStore {
 
     fn total_size(&self) -> u64 {
         let mut s = 0u64;
-        for (_key, (_offset, l)) in &self.index {
+        for (_offset, l) in self.index.values() {
             s += *l as u64;
         }
         s
