@@ -3,6 +3,15 @@
 Electrino is a bitcoin compact block filter (CBF) based Electrum server for personal use.
 
 
+__UPDATE:__ This approach is not viable.
+It turned out that this approach is not possible, Electrum server interface and compact block filters are not compatible.
+The Electrum server receives addresses as script _hashes_, thus the script/address is not available (only after the results have been found). Compact block filters can be queried only with the script, and not the script hash.
+
+Therefore I cease the development of this prototype.
+
+__end of Update__
+
+
 ## The Vision
 
 A fully validating, low-resource "node" to be used for any personal wallet that supports Electrum servers, designed for mostly-on setup.
